@@ -1,4 +1,4 @@
-node{
+node(''){
 
  def mavenHome = tool name: "Maven3.8.2"
    
@@ -20,7 +20,7 @@ node{
  {
   sh "${mavenHome}/bin/mvn clean package"
  }
- 
+ /*
  	stage('SonarQubeReport'){
  sh "${mavenHome}/bin/mvn clean sonar:sonar"
  }
@@ -34,7 +34,7 @@ node{
 	 sshagent(['43f4e05f-567d-4993-ac4a-305dca35debb']) {
      sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@65.0.105.97:/opt/apache-tomcat-9.0.52/webapps/"
      }
-     }
+     }*/
  /*  stage('SendEmailNotification'){
    emailext body: '''Build is over !!
 
