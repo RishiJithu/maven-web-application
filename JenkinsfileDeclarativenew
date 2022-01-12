@@ -1,0 +1,49 @@
+pipeline{
+
+agent any
+tools{
+maven 'maven3.8.4'
+}
+stages{
+
+stage('Check Out the code'){
+steps{
+
+git branch: 'development', credentialsId: '95a40599-709e-4f8d-af80-af5b7fb4cb1c', url: 'https://github.com/RishiJithu/maven-web-application.git'
+}
+}
+
+stage('build'){
+steps{
+sh "mvn clean package"
+}
+
+}
+
+stage('SonarQube'){
+steps{
+sh "mvn clean sonar:sonar"
+}
+
+}
+
+stage('Nexus'){
+steps{
+sh "mvn clean deploy"
+}
+
+}
+
+stage('Deploy to Tomcat'){
+steps{
+
+sshagent(['d29e22cd-debd-42c3-a442-0e308b2c3ae2']) {
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@52.66.239.68:/opt/apache-tomcat-9.0.56/webapps/"
+}
+}
+
+}
+}//tomcat stage
+
+
+}//pipeline
