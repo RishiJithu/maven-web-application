@@ -10,7 +10,7 @@ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', 
 }
 
 triggers(){
-pollSCM('* * * * *')
+//pollSCM('* * * * *')
 }
 stages{
 
